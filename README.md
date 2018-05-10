@@ -20,3 +20,29 @@ To define handlebars-jest as a transformer for your .hbs files, you need to map 
     }
 }
 ```
+
+## Additional options
+
+Configure the transformer in a `handlebars-jest` property in your Jest config's globals.
+
+
+```json
+{
+  "jest": {
+    "transform": {
+      "^.+\\.hbs$": "handlebars-jest"
+    },
+    "globals": {
+      "handlebars-jest": {
+        "helperDirs": [
+          "/some/path"
+        ]
+      }
+    }
+  }
+}
+```
+
+The following options are supported:
+
+- *helperDirs*: Defines additional directories to be searched for helpers, if your templates reference helpers without relative paths.
