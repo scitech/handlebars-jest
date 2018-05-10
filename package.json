@@ -21,7 +21,10 @@
     "handlebars jest transform",
     "handlebars jest preprocessor"
   ],
-  "repository": "git@github.com:tylergould/handlebars-jest.git",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/tylergould/handlebars-jest.git"
+  },
   "author": "Tyler Gould <tg@tylergould.net>",
   "license": "MIT",
   "peerDependencies": {
