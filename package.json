@@ -31,7 +31,7 @@
     "handlebars": "^3.0.0 || ^4.0.0"
   },
   "devDependencies": {
-    "handlebars": "3",
+    "handlebars": "^3.0.0",
     "jest": "^22.4.3",
     "mock-fs": "^4.5.0"
   }
