@@ -1,9 +1,12 @@
-const findHelpers = require('../../lib/find-helpers');
 const mock = require('mock-fs');
+
+const cache = require('../../lib/cache');
+const findHelpers = require('../../lib/find-helpers');
 
 describe('findHelpers', function() {
   afterEach(function() {
     mock.restore();
+    cache.flushAll();
   });
 
   test('creates a map of helper names to absolute paths', function() {
@@ -50,5 +53,22 @@ describe('findHelpers', function() {
     const result = findHelpers([intendedPath]);
     expect(console.warn.mock.calls.length).toEqual(1);
     expect(result).toEqual({});
+  });
+
+  test('subsequent calls use cache', function() {
+    const intendedPath = '/path/to/helpers';
+    mock({
+      [intendedPath]: {
+        'notHelper.txt': 'something else',
+      }
+    });
+
+    const result = findHelpers([intendedPath]);
+    expect(result).toEqual({});
+    const cacheSetMock = jest.fn();
+    cache.set = cacheSetMock;
+    const secondResult = findHelpers([intendedPath]);
+    expect(cacheSetMock.mock.calls.length).toEqual(0);
+    expect(secondResult).toEqual(result);
   });
 });

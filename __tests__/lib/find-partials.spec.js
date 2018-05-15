@@ -1,9 +1,12 @@
-const findPartials = require('../../lib/find-partials');
 const mock = require('mock-fs');
+
+const cache = require('../../lib/cache');
+const findPartials = require('../../lib/find-partials');
 
 describe('findPartials', function() {
   afterEach(function() {
     mock.restore();
+    cache.flushAll();
   });
 
   test('creates a map of partial names to absolute paths', function() {
@@ -48,7 +51,23 @@ describe('findPartials', function() {
     });
 
     const result = findPartials([intendedPath]);
-    expect(console.warn.mock.calls.length).toEqual(1);
     expect(result).toEqual({});
+  });
+
+  test('subsequent calls use cache', function() {
+    const intendedPath = '/path/to/partials';
+    mock({
+      [intendedPath]: {
+        'notpartial.txt': 'something else',
+      }
+    });
+
+    const result = findPartials([intendedPath]);
+    expect(result).toEqual({});
+    const cacheSetMock = jest.fn();
+    cache.set = cacheSetMock;
+    const secondResult = findPartials([intendedPath]);
+    expect(cacheSetMock.mock.calls.length).toEqual(0);
+    expect(secondResult).toEqual(result);
   });
 });
