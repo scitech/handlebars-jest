@@ -36,6 +36,9 @@ Configure the transformer in a `handlebars-jest` property in your Jest config's 
       "handlebars-jest": {
         "helperDirs": [
           "/some/path"
+        ],
+        "partialDirs": [
+          "/some/other/path"
         ]
       }
     }
@@ -45,4 +48,5 @@ Configure the transformer in a `handlebars-jest` property in your Jest config's 
 
 The following options are supported:
 
-- *helperDirs*: Defines additional directories to be searched for helpers, if your templates reference helpers without relative paths.
+- *helperDirs*: Defines directories to be searched for helpers.
+- *partialDirs*: Defines directories to be searched for partials.
