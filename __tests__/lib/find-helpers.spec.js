@@ -71,4 +71,24 @@ describe('findHelpers', function() {
     expect(cacheSetMock.mock.calls.length).toEqual(0);
     expect(secondResult).toEqual(result);
   });
+
+  test('finds nested helpers', function() {
+    const intendedPath = '/path/to/helpers';
+    mock({
+      [intendedPath]: {
+        'firsthelpers.js': 'module.exports = function() { return "im a helper" }',
+        'dir': {
+          'secondhelpers.js': 'module.exports = function() { return "im a helper too" }'
+        },
+      }
+    });
+
+    const expectedResult = {
+      firsthelpers: '/path/to/helpers/firsthelpers.js',
+      'dir/secondhelpers': '/path/to/helpers/dir/secondhelpers.js'
+    };
+
+    const result = findHelpers([intendedPath]);
+    expect(result).toEqual(expectedResult);
+  });
 });
