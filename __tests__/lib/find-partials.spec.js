@@ -1,4 +1,5 @@
 const mock = require('mock-fs');
+const path = require('path');
 
 const cache = require('../../lib/cache');
 const findPartials = require('../../lib/find-partials');
@@ -21,6 +22,24 @@ describe('findPartials', function() {
     const expectedResult = {
       firstpartial: '/path/to/partials/firstpartial.hbs',
       secondpartial: '/path/to/partials/secondpartial.hbs'
+    };
+
+    const result = findPartials([intendedPath]);
+    expect(result).toEqual(expectedResult);
+  });
+
+  test('get from relative path', function() {
+    const intendedPath = './path/to/partials';
+    mock({
+      [intendedPath]: {
+        'firstpartial.hbs': 'module.exports = function() { return "im a partial" }',
+        'secondpartial.hbs':'module.exports = function() { return "im a partial too" }',
+      }
+    });
+
+    const expectedResult = {
+      firstpartial: path.resolve() + '/path/to/partials/firstpartial.hbs',
+      secondpartial: path.resolve() + '/path/to/partials/secondpartial.hbs'
     };
 
     const result = findPartials([intendedPath]);

@@ -1,4 +1,5 @@
 const mock = require('mock-fs');
+const path = require('path');
 
 const cache = require('../../lib/cache');
 const findHelpers = require('../../lib/find-helpers');
@@ -24,6 +25,25 @@ describe('findHelpers', function() {
     };
 
     const result = findHelpers(['/path/to/helpers']);
+    expect(result).toEqual(expectedResult);
+  });
+
+  test('get from relative path', function() {
+    const intendedPath = './path/to/helpers';
+    mock({
+      [intendedPath]: {
+        'firstHelper.js': 'module.exports = function() { return "im a helper" }',
+        'secondHelper.js':'module.exports = function() { return "im a helper too" }',
+      }
+    });
+
+    const rootDir = path.resolve();
+    const expectedResult = {
+      firstHelper: `${rootDir}/path/to/helpers/firstHelper.js`,
+      secondHelper: `${rootDir}/path/to/helpers/secondHelper.js`
+    };
+
+    const result = findHelpers([intendedPath]);
     expect(result).toEqual(expectedResult);
   });
 
