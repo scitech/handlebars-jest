@@ -91,4 +91,32 @@ describe('findHelpers', function() {
     const result = findHelpers([intendedPath]);
     expect(result).toEqual(expectedResult);
   });
+
+  test('should replace <rootDir> by jest root directory in helpers path', function () {
+    // Given
+    const pathToHelpers = '/path/to/helpers';
+    const rootDir = '/root/directory';
+    const configuredPath = `<rootDir>${pathToHelpers}`;
+    const intendedPath = `${rootDir}${pathToHelpers}`;
+
+    mock({
+      [intendedPath]: {
+        'firstHelper.js': 'module.exports = function() { return "im a helper" }',
+        'secondHelper.js':'module.exports = function() { return "im a helper too" }',
+      }
+    });
+
+    const expectedHelpers = {
+      firstHelper: `${intendedPath}/firstHelper.js`,
+      secondHelper: `${intendedPath}/secondHelper.js`
+    };
+    
+    
+    // When
+    const helpers = findHelpers([configuredPath], rootDir);
+
+
+    // Then
+    expect(helpers).toEqual(expectedHelpers)
+  })
 });

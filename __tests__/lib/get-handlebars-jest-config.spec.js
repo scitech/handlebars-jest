@@ -40,4 +40,33 @@ describe('getHandlebarsJestConfig', function() {
     cache.set = cacheSetMock;
     expect(cacheSetMock.mock.calls.length).toEqual(0);
   });
+
+  test('store jest rootDir in config when present', function() {
+    // Given
+    const jestConfig = {
+      name: 'somethingElse',
+      rootDir: '/root/directory'
+    };
+
+    // When
+    const result = getHandlebarsJestConfig(jestConfig);
+
+    // Then
+    expect(result).toEqual({'rootDir': '/root/directory'});
+  });
+
+  test('A warning should be displayed if no jest root directory was found', function() {
+    // Given
+    const jestConfig = {
+      name: 'somethingElse',
+    };
+    console.warn = jest.fn();
+
+    // When
+    const result = getHandlebarsJestConfig(jestConfig);
+
+    // Then
+    expect(result).toEqual({});
+    expect(console.warn.mock.calls.length).toEqual(1);
+  })
 });
