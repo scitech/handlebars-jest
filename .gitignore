@@ -57,3 +57,6 @@ typings/
 # dotenv environment variables file
 .env
 
+# Editors configuration files
+.idea/
+*.iml
