@@ -35,10 +35,12 @@ Configure the transformer in a `handlebars-jest` property in your Jest config's 
     "globals": {
       "handlebars-jest": {
         "helperDirs": [
-          "/some/path"
+          "/some/absolute/path/to/helpers",
+          "<rootDir>/another/helpers/path"
         ],
         "partialDirs": [
-          "/some/other/path"
+          "/some/absolute/path/to/partials",
+          "<rootDir>/another/partials/path"
         ]
       }
     }

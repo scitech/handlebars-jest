@@ -90,4 +90,32 @@ describe('findPartials', function() {
     const result = findPartials([intendedPath]);
     expect(result).toEqual(expectedResult);
   });
+
+  test('should replace <rootDir> by jest root directory in partials path', function () {
+    // Given
+    const pathToPartials = '/path/to/partials';
+    const rootDir = '/root/directory';
+    const configuredPath = `<rootDir>${pathToPartials}`;
+    const intendedPath = `${rootDir}${pathToPartials}`;
+
+    mock({
+      [intendedPath]: {
+        'firstPartial.hbs': 'module.exports = function() { return "im a partial" }',
+        'secondPartial.hbs':'module.exports = function() { return "im a partial too" }',
+      }
+    });
+
+    const expectedPartials = {
+      firstPartial: `${intendedPath}/firstPartial.hbs`,
+      secondPartial: `${intendedPath}/secondPartial.hbs`
+    };
+
+
+    // When
+    const partials = findPartials([configuredPath], rootDir);
+
+
+    // Then
+    expect(partials).toEqual(expectedPartials)
+  })
 });
