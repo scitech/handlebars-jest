@@ -42,7 +42,7 @@ describe('findPartials', function() {
     expect(result).toEqual({});
   });
 
-  test('only finds hbs', function() {
+  test('only finds hbs when using default extensions', function() {
     const intendedPath = '/path/to/partials';
     mock({
       [intendedPath]: {
@@ -52,6 +52,23 @@ describe('findPartials', function() {
 
     const result = findPartials([intendedPath]);
     expect(result).toEqual({});
+  });
+
+  test('finds hbs files using custom extensions', function() {
+    const intendedPath = '/path/to/partials';
+    mock({
+      [intendedPath]: {
+        'mypartial.html': 'partial using nonstandard extension',
+        'nolongerfound.hbs': 'partial with default extension which has been overridden'
+      }
+    });
+
+    const expectedResult = {
+        'mypartial': '/path/to/partials/mypartial.html'
+    };
+
+    const result = findPartials([intendedPath], null, ['.html']);
+    expect(result).toEqual(expectedResult);
   });
 
   test('subsequent calls use cache', function() {

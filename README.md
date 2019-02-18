@@ -41,6 +41,10 @@ Configure the transformer in a `handlebars-jest` property in your Jest config's 
         "partialDirs": [
           "/some/absolute/path/to/partials",
           "<rootDir>/another/partials/path"
+        ],
+        "partialExtensions": [
+          ".hbs",
+          ".html"
         ]
       }
     }
@@ -52,3 +56,4 @@ The following options are supported:
 
 - *helperDirs*: Defines directories to be searched for helpers.
 - *partialDirs*: Defines directories to be searched for partials.
+- *partialExtensions*: Defines valid filename extensions for partials. Default is `['.hbs', '.handlebars']`.
