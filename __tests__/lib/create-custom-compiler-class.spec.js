@@ -22,6 +22,7 @@ describe('CustomCompiler', function() {
     const CustomCompiler = createCustomCompilerClass({
       helperDirs: ['/some/path'],
       partialDirs: ['/other/path'],
+      partialExtensions: ['.html']
     });
 
     expect(new CustomCompiler()).toBeInstanceOf(Handlebars.JavaScriptCompiler);
