@@ -42,7 +42,7 @@ describe('findHelpers', function() {
     expect(result).toEqual({});
   });
 
-  test('only finds js', function() {
+  test('only finds js when using default extensions', function() {
     const intendedPath = '/path/to/helpers';
     mock({
       [intendedPath]: {
@@ -53,6 +53,24 @@ describe('findHelpers', function() {
     const result = findHelpers([intendedPath]);
     expect(console.warn.mock.calls.length).toEqual(1);
     expect(result).toEqual({});
+  });
+
+  test('finds mjs files using custom extensions', function() {
+    const intendedPath = '/path/to/helpers';
+    mock({
+      [intendedPath]: {
+        'myhelper.mjs': 'helper using nonstandard extension',
+        'nolongerfound.js': 'helper with default extension which has been overridden',
+      }
+    });
+
+    const expectedResult = {
+        'myhelper': '/path/to/helpers/myhelper.mjs'
+    };
+
+    const result = findHelpers([intendedPath], null, ['.mjs']);
+    expect(console.warn.mock.calls.length).toEqual(1);
+    expect(result).toEqual(expectedResult);
   });
 
   test('subsequent calls use cache', function() {
@@ -110,8 +128,8 @@ describe('findHelpers', function() {
       firstHelper: `${intendedPath}/firstHelper.js`,
       secondHelper: `${intendedPath}/secondHelper.js`
     };
-    
-    
+
+
     // When
     const helpers = findHelpers([configuredPath], rootDir);
 
