@@ -21,6 +21,7 @@ describe('CustomCompiler', function() {
 
     const CustomCompiler = createCustomCompilerClass({
       helperDirs: ['/some/path'],
+      helperExtensions: ['.mjs'],
       partialDirs: ['/other/path'],
       partialExtensions: ['.html']
     });
