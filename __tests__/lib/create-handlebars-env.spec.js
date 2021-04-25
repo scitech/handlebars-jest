@@ -3,7 +3,7 @@ const mock = require('mock-fs');
 
 const createHandlebarsEnv = require('../../lib/create-handlebars-env');
 
-describe('getHandlebarsJestConfig', function() {
+describe('createHandlebarsEnv', function() {
   afterEach(function() {
     mock.restore();
   });
