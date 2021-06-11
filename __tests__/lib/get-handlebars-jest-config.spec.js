@@ -20,6 +20,22 @@ describe('getHandlebarsJestConfig', function() {
     expect(result).toEqual(expectedResult);
   });
 
+  test('gets the handlebars-jest config when using jest 27', function () {
+    const expectedResult = {
+      some: 'value',
+    };
+    const jestConfig = {
+      config: {
+        globals: {
+          'handlebars-jest': expectedResult,
+        },
+      }
+    };
+
+    const result = getHandlebarsJestConfig(jestConfig);
+    expect(result).toEqual(expectedResult);
+  });
+
   test('empty object when not present', function() {
     const jestConfig = {
       name: 'somethingElse',
@@ -44,7 +60,7 @@ describe('getHandlebarsJestConfig', function() {
   test('store jest rootDir in config when present', function() {
     // Given
     const jestConfig = {
-      name: 'somethingElse',
+      globals: {},
       rootDir: '/root/directory'
     };
 
