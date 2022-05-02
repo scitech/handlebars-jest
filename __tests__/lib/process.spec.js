@@ -5,6 +5,6 @@ describe('process', function() {
     const mockContents = '<div></div>';
 
     const result = process(mockContents);
-    expect(typeof result).toEqual('string');
+    expect(typeof result.code).toEqual('string');
   });
 });
