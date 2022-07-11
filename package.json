@@ -27,13 +27,12 @@
   },
   "author": "Tyler Gould <tg@tylergould.net>",
   "license": "MIT",
-  "peerDependencies": {},
   "devDependencies": {
     "handlebars": "^4.7.7",
-    "jest": "^26.6.3",
-    "mock-fs": "^4.5.0"
+    "jest": "^28.0.3",
+    "mock-fs": "^5.1.2"
   },
   "dependencies": {
-    "node-cache": "^4.2.0"
+    "node-cache": "^5.1.2"
   }
 }
