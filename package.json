@@ -1,6 +1,6 @@
 {
   "name": "handlebars-jest",
-  "version": "0.6.0",
+  "version": "1.0.0",
   "description": "Handlebars transformer for Jest",
   "main": "handlebars-jest.js",
   "files": [
